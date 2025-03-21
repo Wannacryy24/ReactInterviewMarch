@@ -1,0 +1,31 @@
+name: CI Production
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v4
+
+            - name: set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: 18
+                cache: 'npm'
+
+            - name: Install dependencies
+              run: npm install
+        
+            - name: Run Tests
+              run: npm test
+        
+            - name: Build for Production
+              run: npm run build                
+
